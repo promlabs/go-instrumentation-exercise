@@ -19,16 +19,15 @@ func (a demoAPI) foo(w http.ResponseWriter, r *http.Request) {
 	log.Println("Handling foo...")
 
 	// Simulate a random duration that the "foo" operation needs to be completed.
-	time.Sleep(75*time.Millisecond + time.Duration(rand.Float64())*50*time.Millisecond)
+	time.Sleep(25*time.Millisecond + time.Duration(rand.Float64()*150)*time.Millisecond)
 
 	w.Write([]byte("Handled foo"))
 }
 
 func (a demoAPI) bar(w http.ResponseWriter, r *http.Request) {
 	log.Println("Handling bar...")
-
 	// Simulate a random duration that the "bar" operation needs to be completed.
-	time.Sleep(150*time.Millisecond + time.Duration(rand.Float64())*100*time.Millisecond)
+	time.Sleep(50*time.Millisecond + time.Duration(rand.Float64()*200)*time.Millisecond)
 
 	w.Write([]byte("Handled bar"))
 }
@@ -39,7 +38,7 @@ func periodicBackgroundTask() {
 	for {
 		log.Println("Performing background task...")
 		// Simulate a random duration that the background task needs to be completed.
-		time.Sleep(1*time.Second + time.Duration(rand.Float64())*500*time.Millisecond)
+		time.Sleep(1*time.Second + time.Duration(rand.Float64()*500)*time.Millisecond)
 
 		// Simulate the background task either succeeding or failing (with a 30% probability).
 		if rand.Float64() > 0.3 {
