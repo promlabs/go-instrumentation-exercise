@@ -53,6 +53,7 @@ func periodicBackgroundTask() {
 
 func main() {
 	listenAddr := flag.String("web.listen-addr", ":8080", "The address to listen on for web requests.")
+	flag.Parse()
 
 	go periodicBackgroundTask()
 
