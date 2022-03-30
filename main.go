@@ -89,7 +89,11 @@ func periodicBackgroundTask(reg prometheus.Registerer) {
 		// Simulate a random duration that the background task needs to be completed.
 		time.Sleep(1*time.Second + time.Duration(rand.Float64()*500)*time.Millisecond)
 
-		lastRunTimestamp := float64(time.Now().Unix())
+		// We could have used lastRun.SetToCurrentTime(), but in case the batch job
+		// succeeds, we want to ensure that both lastRun and lastSuccess have the exact
+		// same timestamp (for example, to enable equality comparisons in PromQL to check
+		// whether the last run was successful).
+		lastRunTimestamp := float64(time.Now().UnixNano()) / 1e9
 
 		// Simulate the background task either succeeding or failing (with a 30% probability).
 		if rand.Float64() > 0.3 {
